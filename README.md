@@ -43,6 +43,36 @@ src/
   main.tsx          # mounts app, wraps with SWRConfig
 ```
 
+## Design decisions
+
+### SWR caching strategy
+
+All revalidation triggers are disabled (`revalidateOnFocus`, `revalidateOnReconnect`, `revalidateIfStale`). The leagues list is static data from a free-tier API with no auth — aggressive revalidation would hammer the rate limit and provide no benefit. `shouldRetryOnError: false` is set for the same reason: if the API returns an error, retrying immediately won't help.
+
+Badge fetches are keyed by league ID (`search_all_seasons.php?badge=1&id=<id>`). SWR caches each key independently, so expanding the same card a second time is instant with no network request.
+
+### Conditional badge fetching
+
+`SeasonBadge` only mounts when a card is expanded, so `useSeasonBadge` always receives a real league ID — the `null` key pattern (which tells SWR to skip the fetch) is kept in the hook signature for correctness but is never triggered from the component. This avoids fetching badge data for leagues the user never opens.
+
+### State ownership
+
+All interactive state (`search`, `selectedSport`, `expandedLeagueId`) lives in `Leagues.tsx`, the feature root. Child components are fully controlled — they receive values and callbacks as props. This makes data flow explicit and keeps components individually testable without any context setup.
+
+`sportOptions` and `filteredLeagues` are derived via `useMemo` rather than stored as separate state, avoiding the class of bugs where derived state goes stale after a primary state update.
+
+### Accordion as a native `<button>`
+
+The expandable card uses a native `<button>` element rather than a `<div role="button">`. A native button gives keyboard focus, Enter/Space handling, and correct AT announcement for free, with no manual `tabIndex` or `onKeyDown` required. The panel (`role="region"`) is a sibling inside the card wrapper, not a descendant of the button, so screen readers compute the button's accessible name only from the header and sport badge — not from the expanded content.
+
+### Feature-based folder structure
+
+Code is grouped by feature (`features/leagues/`) rather than by type (`components/`, `hooks/`). All the types, hooks, and components for a feature live together, so deleting or moving a feature is a single folder operation. Shared infrastructure (`StatusMessage`, `PageLayout`, etc.) lives in `shared/` and is exported through a barrel file.
+
+### CSS Modules over a utility framework
+
+Each component owns its styles in a co-located `.module.css` file. There is no global class pollution and no build-time purge configuration to maintain. `clsx` handles conditional class composition without string concatenation.
+
 ---
 
 ## How I used AI for this task
