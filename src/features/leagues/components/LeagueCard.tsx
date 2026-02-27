@@ -1,4 +1,3 @@
-import type { KeyboardEvent } from 'react';
 import clsx from 'clsx';
 import type { League } from '../types';
 import SeasonBadge from './SeasonBadge';
