@@ -9,7 +9,11 @@ interface StatusMessageProps {
 
 export function StatusMessage({ message, isError = false, onRetry }: StatusMessageProps) {
   return (
-    <div className={clsx(styles.status, isError && styles.error)}>
+    <div
+      role={isError ? 'alert' : 'status'}
+      aria-live={isError ? 'assertive' : 'polite'}
+      className={clsx(styles.status, isError && styles.error)}
+    >
       <p>{message}</p>
       {onRetry && <button onClick={onRetry}>Retry</button>}
     </div>

@@ -11,6 +11,9 @@ interface LeagueCardProps {
 }
 
 export default function LeagueCard({ league, isExpanded, onToggle }: LeagueCardProps) {
+  const panelId = `league-panel-${league.idLeague}`;
+  const buttonId = `league-btn-${league.idLeague}`;
+
   const handleClick = () => {
     onToggle(league.idLeague);
   };
@@ -24,15 +27,17 @@ export default function LeagueCard({ league, isExpanded, onToggle }: LeagueCardP
 
   return (
     <div
+      id={buttonId}
       className={clsx(styles.card, isExpanded && styles.expanded)}
       onClick={handleClick}
       role="button"
       tabIndex={0}
       aria-expanded={isExpanded}
+      aria-controls={panelId}
       onKeyDown={handleKeyDown}
     >
       <div className={styles.header}>
-        <h2 className={styles.leagueName}>{league.strLeague}</h2>
+        <p className={styles.leagueName}>{league.strLeague}</p>
         <span className={styles.sport}>{league.strSport}</span>
       </div>
 
@@ -41,7 +46,11 @@ export default function LeagueCard({ league, isExpanded, onToggle }: LeagueCardP
         <div className={styles.toggleHint}>{isExpanded ? '▲ Collapse' : '▼ Show badge'}</div>
       </div>
 
-      {isExpanded && <SeasonBadge leagueId={league.idLeague} leagueName={league.strLeague} />}
+      {isExpanded && (
+        <div id={panelId} role="region" aria-labelledby={buttonId}>
+          <SeasonBadge leagueId={league.idLeague} leagueName={league.strLeague} />
+        </div>
+      )}
     </div>
   );
 }

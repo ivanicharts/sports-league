@@ -8,20 +8,20 @@ interface SeasonBadgeProps {
 }
 
 export default function SeasonBadge({ leagueId, leagueName }: SeasonBadgeProps) {
-  const { firstSeason, isLoading, error } = useSeasonBadge(leagueId);
+  const { season, isLoading, error } = useSeasonBadge(leagueId);
 
   return (
     <div className={styles.wrapper}>
       {isLoading && <StatusMessage message="Loading badge…" />}
       {error && <StatusMessage message="Could not load badge." isError />}
-      {!isLoading && !error && !firstSeason?.strBadge && <StatusMessage message="No badge available." />}
+      {!isLoading && !error && !season?.strBadge && <StatusMessage message="No badge available." />}
 
-      {!isLoading && !error && firstSeason?.strBadge && (
+      {!isLoading && !error && season?.strBadge && (
         <div className={styles.badgeWrapper}>
-          <h4 className={styles.badgeTitle}>Season Badge: {firstSeason.strSeason}</h4>
+          <p className={styles.badgeTitle}>Season Badge: {season.strSeason}</p>
           <img
             className={styles.badge}
-            src={`${firstSeason.strBadge}/tiny`}
+            src={`${season.strBadge}/tiny`}
             alt={`${leagueName} season badge`}
             loading="lazy"
           />
