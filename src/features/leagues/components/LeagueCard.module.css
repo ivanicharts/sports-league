@@ -13,6 +13,17 @@
   gap: 0.5rem;
   height: 100%;
   box-sizing: border-box;
+  width: 100%;
+  color: inherit;
+  text-align: left;
+  outline: none;
+}
+
+.card:focus-visible,
+.card:focus {
+  outline: none;
+  border-color: #646cff;
+  border-width: 2px;
 }
 
 .card:hover {

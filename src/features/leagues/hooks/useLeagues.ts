@@ -17,6 +17,6 @@ export function useLeagues(): UseLeaguesResult {
     leagues: data?.leagues ?? [],
     isLoading,
     error,
-    refetch: () => void mutate(),
+    refetch: () => mutate(),
   };
 }

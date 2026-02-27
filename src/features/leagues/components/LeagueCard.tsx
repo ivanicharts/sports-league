@@ -18,23 +18,14 @@ export default function LeagueCard({ league, isExpanded, onToggle }: LeagueCardP
     onToggle(league.idLeague);
   };
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLElement>) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      handleClick();
-    }
-  };
-
   return (
-    <div
+    <button
       id={buttonId}
       className={clsx(styles.card, isExpanded && styles.expanded)}
       onClick={handleClick}
-      role="button"
-      tabIndex={0}
+      type="button"
       aria-expanded={isExpanded}
       aria-controls={panelId}
-      onKeyDown={handleKeyDown}
     >
       <div className={styles.header}>
         <p className={styles.leagueName}>{league.strLeague}</p>
@@ -51,6 +42,6 @@ export default function LeagueCard({ league, isExpanded, onToggle }: LeagueCardP
           <SeasonBadge leagueId={league.idLeague} leagueName={league.strLeague} />
         </div>
       )}
-    </div>
+    </button>
   );
 }
