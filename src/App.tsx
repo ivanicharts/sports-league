@@ -3,10 +3,11 @@ import { useLeagues } from './hooks/useLeagues';
 import SearchBar from './components/SearchBar';
 import SportFilter from './components/SportFilter';
 import LeagueList from './components/LeagueList';
-import './App.css';
+import StatusMessage from './components/StatusMessage';
+import styles from './App.module.css';
 
 function App() {
-  const { leagues, isLoading, error } = useLeagues();
+  const { leagues, isLoading, error, refetch } = useLeagues();
 
   const [search, setSearch] = useState('');
   const [selectedSport, setSelectedSport] = useState('');
@@ -19,11 +20,9 @@ function App() {
 
   const filteredLeagues = useMemo(() => {
     return leagues.filter((league) => {
-      const matchesSearch = league.strLeague
-        .toLowerCase()
-        .includes(search.toLowerCase().trim());
-      const matchesSport =
-        selectedSport === '' || league.strSport === selectedSport;
+      const matchesSearch = league.strLeague.toLowerCase().includes(search.toLowerCase().trim());
+      const matchesSport = selectedSport === '' || league.strSport === selectedSport;
+
       return matchesSearch && matchesSport;
     });
   }, [leagues, search, selectedSport]);
@@ -32,21 +31,22 @@ function App() {
     setExpandedLeagueId((prev) => (prev === id ? null : id));
   };
 
-  if (isLoading) return <p className="status">Loading leagues…</p>;
-  if (error) return <p className="status error">Failed to load leagues.</p>;
+  if (isLoading) {
+    return <StatusMessage message="Loading leagues…" />;
+  }
+
+  if (error) {
+    return <StatusMessage message="Failed to load leagues." isError onRetry={refetch} />;
+  }
 
   return (
-    <div className="appShell">
-      <header className="appHeader">
-        <h1>Sports Leagues</h1>
+    <div className={styles.appShell}>
+      <header>
+        <h1 className={styles.appHeaderTitle}>Sports Leagues</h1>
       </header>
-      <div className="controls">
+      <div className={styles.controls}>
         <SearchBar value={search} onChange={setSearch} />
-        <SportFilter
-          options={sportOptions}
-          value={selectedSport}
-          onChange={setSelectedSport}
-        />
+        <SportFilter options={sportOptions} value={selectedSport} onChange={setSelectedSport} />
       </div>
       <main>
         <LeagueList

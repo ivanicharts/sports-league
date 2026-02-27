@@ -1,0 +1,17 @@
+.appShell {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.appHeaderTitle {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end;
+}

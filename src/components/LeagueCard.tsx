@@ -1,6 +1,7 @@
 import type { KeyboardEvent } from 'react';
-import { useSeasonBadge } from '../hooks/useSeasonBadge';
+import clsx from 'clsx';
 import type { League } from '../types';
+import SeasonBadge from './SeasonBadge';
 import styles from './LeagueCard.module.css';
 
 interface LeagueCardProps {
@@ -10,10 +11,6 @@ interface LeagueCardProps {
 }
 
 export default function LeagueCard({ league, isExpanded, onToggle }: LeagueCardProps) {
-  const { firstSeason, isLoading, error } = useSeasonBadge(
-    isExpanded ? league.idLeague : null,
-  );
-
   const handleClick = () => {
     onToggle(league.idLeague);
   };
@@ -26,8 +23,8 @@ export default function LeagueCard({ league, isExpanded, onToggle }: LeagueCardP
   };
 
   return (
-    <article
-      className={`${styles.card} ${isExpanded ? styles.expanded : ''}`}
+    <div
+      className={clsx(styles.card, isExpanded && styles.expanded)}
       onClick={handleClick}
       role="button"
       tabIndex={0}
@@ -39,31 +36,12 @@ export default function LeagueCard({ league, isExpanded, onToggle }: LeagueCardP
         <span className={styles.sport}>{league.strSport}</span>
       </div>
 
-      {league.strLeagueAlternate && (
-        <p className={styles.alternate}>{league.strLeagueAlternate}</p>
-      )}
-
-      {isExpanded && (
-        <div className={styles.badgeSection}>
-          {isLoading && <p className={styles.badgeStatus}>Loading badge…</p>}
-          {error && <p className={styles.badgeStatus}>Could not load badge.</p>}
-          {!isLoading && !error && firstSeason?.strBadge && (
-            <img
-              className={styles.badge}
-              src={firstSeason.strBadge}
-              alt={`${league.strLeague} season badge`}
-              loading="lazy"
-            />
-          )}
-          {!isLoading && !error && !firstSeason?.strBadge && (
-            <p className={styles.badgeStatus}>No badge available.</p>
-          )}
-        </div>
-      )}
-
-      <div className={styles.toggleHint}>
-        {isExpanded ? '▲ Collapse' : '▼ Show badge'}
+      <div className={styles.info}>
+        {league.strLeagueAlternate && <p className={styles.alternate}>{league.strLeagueAlternate}</p>}
+        <div className={styles.toggleHint}>{isExpanded ? '▲ Collapse' : '▼ Show badge'}</div>
       </div>
-    </article>
+
+      {isExpanded && <SeasonBadge leagueId={league.idLeague} leagueName={league.strLeague} />}
+    </div>
   );
 }

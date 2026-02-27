@@ -28,6 +28,13 @@ body {
   min-height: 100vh;
 }
 
+#root {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+  text-align: left;
+}
+
 h1 {
   font-size: 3.2em;
   line-height: 1.1;

@@ -1,0 +1,37 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 0.5rem;
+  justify-content: center;
+  flex: 1;
+}
+
+.badge {
+  max-width: 80px;
+  max-height: 80px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.status {
+  margin: 0;
+  font-size: 0.85rem;
+  opacity: 0.6;
+}
+
+.badgeWrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.badgeTitle {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding-top: 0.5rem;
+}

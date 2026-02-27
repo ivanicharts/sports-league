@@ -22,6 +22,11 @@
   cursor: pointer;
 }
 
+.select option {
+  background-color: #1a1a1a;
+  color: rgba(255, 255, 255, 0.87);
+}
+
 .select:focus {
   border-color: #646cff;
   outline: none;
