@@ -15,12 +15,6 @@
   border-radius: 4px;
 }
 
-.status {
-  margin: 0;
-  font-size: 0.85rem;
-  opacity: 0.6;
-}
-
 .badgeWrapper {
   display: flex;
   align-items: center;

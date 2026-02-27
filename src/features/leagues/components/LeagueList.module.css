@@ -13,9 +13,3 @@
   opacity: 0.6;
   font-size: 1rem;
 }
-
-@media (max-width: 360px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
-}

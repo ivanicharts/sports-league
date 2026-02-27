@@ -31,3 +31,16 @@
   border-color: #646cff;
   outline: none;
 }
+
+@media (prefers-color-scheme: light) {
+  .select {
+    background-color: #f9f9f9;
+    color: #213547;
+    border-color: #ccc;
+  }
+
+  .select option {
+    background-color: #f9f9f9;
+    color: #213547;
+  }
+}

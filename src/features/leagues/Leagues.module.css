@@ -1,0 +1,25 @@
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.searchBar {
+  flex: 4 1 0;
+}
+
+.filter {
+  flex: 2 1 0;
+}
+
+@media (max-width: 600px) {
+  .controls {
+    flex-direction: column;
+  }
+
+  .searchBar,
+  .filter {
+    flex: 1 1 100%;
+  }
+}

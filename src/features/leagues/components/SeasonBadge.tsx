@@ -1,4 +1,5 @@
 import { useSeasonBadge } from '../hooks/useSeasonBadge';
+import { StatusMessage } from '../../../shared/components';
 import styles from './SeasonBadge.module.css';
 
 interface SeasonBadgeProps {
@@ -11,9 +12,9 @@ export default function SeasonBadge({ leagueId, leagueName }: SeasonBadgeProps) 
 
   return (
     <div className={styles.wrapper}>
-      {isLoading && <p className={styles.status}>Loading badge…</p>}
-      {error && <p className={styles.status}>Could not load badge.</p>}
-      {!isLoading && !error && !firstSeason?.strBadge && <p className={styles.status}>No badge available.</p>}
+      {isLoading && <StatusMessage message="Loading badge…" />}
+      {error && <StatusMessage message="Could not load badge." isError />}
+      {!isLoading && !error && !firstSeason?.strBadge && <StatusMessage message="No badge available." />}
 
       {!isLoading && !error && firstSeason?.strBadge && (
         <div className={styles.badgeWrapper}>

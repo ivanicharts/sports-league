@@ -7,7 +7,7 @@ interface SportFilterProps {
   onChange: (value: string) => void;
 }
 
-export default function SportFilter({ options, value, onChange }: SportFilterProps) {
+export function SportFilter({ options, value, onChange }: SportFilterProps) {
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     onChange(e.target.value);
   };
@@ -17,12 +17,7 @@ export default function SportFilter({ options, value, onChange }: SportFilterPro
       <label htmlFor="sport-filter" className={styles.label}>
         Filter by sport
       </label>
-      <select
-        id="sport-filter"
-        className={styles.select}
-        value={value}
-        onChange={handleChange}
-      >
+      <select id="sport-filter" className={styles.select} value={value} onChange={handleChange}>
         <option value="">All sports</option>
         {options.map((sport) => (
           <option key={sport} value={sport}>

@@ -22,7 +22,7 @@
 
 .card.expanded {
   border-color: #646cff;
-  min-height: 203px; /* Adjust based on the content */
+  min-height: 203px;
 }
 
 .header {

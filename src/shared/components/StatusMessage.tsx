@@ -7,7 +7,7 @@ interface StatusMessageProps {
   onRetry?: () => void;
 }
 
-export default function StatusMessage({ message, isError = false, onRetry }: StatusMessageProps) {
+export function StatusMessage({ message, isError = false, onRetry }: StatusMessageProps) {
   return (
     <div className={clsx(styles.status, isError && styles.error)}>
       <p>{message}</p>

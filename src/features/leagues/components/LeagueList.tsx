@@ -1,5 +1,6 @@
 import type { League } from '../types';
 import LeagueCard from './LeagueCard';
+import { StatusMessage } from '../../../shared/components';
 import styles from './LeagueList.module.css';
 
 interface LeagueListProps {
@@ -8,24 +9,16 @@ interface LeagueListProps {
   onToggle: (id: string) => void;
 }
 
-export default function LeagueList({
-  leagues,
-  expandedLeagueId,
-  onToggle,
-}: LeagueListProps) {
+export default function LeagueList({ leagues, expandedLeagueId, onToggle }: LeagueListProps) {
   if (leagues.length === 0) {
-    return <p className={styles.empty}>No leagues match your search.</p>;
+    return <StatusMessage message="No leagues match your search." />;
   }
 
   return (
     <ul className={styles.grid} role="list">
       {leagues.map((league) => (
         <li key={league.idLeague}>
-          <LeagueCard
-            league={league}
-            isExpanded={expandedLeagueId === league.idLeague}
-            onToggle={onToggle}
-          />
+          <LeagueCard league={league} isExpanded={expandedLeagueId === league.idLeague} onToggle={onToggle} />
         </li>
       ))}
     </ul>
